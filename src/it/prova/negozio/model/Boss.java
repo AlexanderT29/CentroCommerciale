@@ -6,6 +6,11 @@ public class Boss extends Lavoratore{
         super(nome, cognome);
     }
 
+    public Boss(String nome, String cognome, Negozio negozio){
+        super(nome, cognome);
+        super.negozio = negozio;
+    }
+
     @Override
     public boolean handleItemAdd(Item item) {
         return false;

@@ -29,17 +29,17 @@ public class TestCentroCommerciale {
 
 
         // Creazione dei Lavoratori
-        Boss boss = new Boss("Mario", "Rossi");
+        Boss boss1 = new Boss("Mario", "Rossi");
         PersonaleAmministrativo admin = new PersonaleAmministrativo("Luigi", "Verdi");
-        Commesso commesso = new Commesso("Paolo", "Bianchi");
+        Commesso commesso1 = new Commesso("Paolo", "Bianchi");
         Boss bossTech = new Boss("Mario", "Rossi");
         Commesso commessoTech = new Commesso("Luigi", "Verdi");
         Commesso commessoFashion = new Commesso("Anna", "Bianchi");
 
         // Aggiungiamo i lavoratori alla lista del negozio per passare il controllo contains()
-        negozioElettronica.getLavoratori().add(boss);
+        negozioElettronica.getLavoratori().add(boss1);
         negozioElettronica.getLavoratori().add(admin);
-        negozioElettronica.getLavoratori().add(commesso);
+        negozioElettronica.getLavoratori().add(commesso1);
 
         negozioTech.getLavoratori().add(bossTech);
         negozioTech.getLavoratori().add(commessoTech);
@@ -50,9 +50,9 @@ public class TestCentroCommerciale {
         commessoFashion.setNegozio(negozioAbbigliamento);
 
         // Impostiamo il negozio nel lavoratore per evitare il NullPointerException
-        boss.setNegozio(negozioElettronica);
+        boss1.setNegozio(negozioElettronica);
         admin.setNegozio(negozioElettronica);
-        commesso.setNegozio(negozioElettronica);
+        commesso1.setNegozio(negozioElettronica);
 
 
 
@@ -69,7 +69,7 @@ public class TestCentroCommerciale {
         System.out.println("--- TEST AGGIUNTA MERCE ---");
 
         // Il Boss non può aggiungere merce (restituisce false)
-        boolean esitoBoss = negozioElettronica.addToItems(boss, smartphone);
+        boolean esitoBoss = negozioElettronica.addToItems(boss1, smartphone);
         System.out.println("Boss aggiunge smartphone: Atteso: false, \nRisultato: " + esitoBoss);
 
         // L'Amministrativo può aggiungere merce
@@ -77,7 +77,7 @@ public class TestCentroCommerciale {
         System.out.println("Admin aggiunge cuffie: Atteso: true, \nRisultato: " + esitoAdmin);
 
         // Il Commesso può aggiungere merce
-        boolean esitoCommesso = negozioElettronica.addToItems(commesso, laptop);
+        boolean esitoCommesso = negozioElettronica.addToItems(commesso1, laptop);
         System.out.println("Commesso aggiunge laptop: Atteso: true, \nRisultato: " + esitoCommesso);
 
         // Il Boss non può aggiungere merce
@@ -104,7 +104,7 @@ public class TestCentroCommerciale {
         System.out.println("\n--- TEST RIMOZIONE MERCE ---");
 
         // Il Boss non può rimuovere merce
-        boolean rimozioneBoss = negozioElettronica.removeFromItems(boss, cuffie);
+        boolean rimozioneBoss = negozioElettronica.removeFromItems(boss1, cuffie);
         System.out.println("Boss rimuove cuffie: Atteso: false, \nRisultato: " + rimozioneBoss );
 
         // L'Amministrativo non può rimuovere merce
@@ -112,7 +112,7 @@ public class TestCentroCommerciale {
         System.out.println("Admin rimuove cuffie: Atteso: false, \nRisultato: " + rimozioneAdmin );
 
         // Il Commesso può rimuovere merce
-        boolean rimozioneCommesso = negozioElettronica.removeFromItems(commesso, cuffie);
+        boolean rimozioneCommesso = negozioElettronica.removeFromItems(commesso1, cuffie);
         System.out.println("Commesso rimuove cuffie: Atteso: true, \nRisultato: " + rimozioneCommesso);
 
         // Il commesso cerca di rimuovere un mouse che non è mai stato aggiunto
@@ -282,6 +282,66 @@ public class TestCentroCommerciale {
         System.out.println("Items Negozio B: " + negozioB.getMerce());
 
         System.out.println("\n=== FINE TEST ===");
+
+        // Fine Test Pietro
+
+
+        // Inizio Test Tommaso
+
+        System.out.println();
+        System.out.println("**********************************************");
+        System.out.println("Inizio Test Tommaso");
+        System.out.println();
+
+        CentroCommerciale centroCommerciale = new CentroCommerciale();
+
+        Negozio negozio = new Negozio("asdsad","srl");
+        Lavoratore commesso = new Commesso("Alfredo", "Gigli", negozio);
+        Lavoratore boss = new Boss("Mario", "Rossi", negozio);
+        Lavoratore personaleAmministrativo = new PersonaleAmministrativo("Luigi", "Verdi", negozio);
+        List<Lavoratore> lavoratori = new ArrayList<>();
+        lavoratori.add(commesso);
+        lavoratori.add(boss);
+        lavoratori.add(personaleAmministrativo); // popolo la lista di lavoratori
+        negozio.setLavoratori(lavoratori);// setto la lista al negozio
+        Lavoratore commessoSec = new Commesso("Francesco", "Neri");
+
+
+        Item cellulare = new Item("A32", "Uno smartphone performante", 300, negozio);
+        Item matita = new Item("B56", "Una semplice matita", 1, negozio);
+        Item lavatrice = new Item("T98", "Una comoda lavatrice", 100, negozio);
+
+        /*List<Item> prodotti = new ArrayList<>();
+        prodotti.add(cellulare);
+        prodotti.add(matita);
+        prodotti.add(lavatrice);*/
+        System.out.println("Test della funzione addToItems()");
+        System.out.println(negozio.addToItems(commesso, cellulare)); // mi aspetto true
+        System.out.println(negozio.getMerce()); // controllo che il cellulare sia presente nella lista
+        System.out.println(negozio.addToItems(boss, matita)); // mi aspetto false
+        System.out.println(negozio.getMerce()); // controllo che solo il cellulare sia presente nella lista
+        System.out.println(negozio.addToItems(personaleAmministrativo, matita)); // mi aspetto true
+        System.out.println(negozio.getMerce()); // controllo che sia il cellulare che la matita siano presenti nella lista
+        System.out.println(negozio.addToItems(commesso, cellulare)); // mi aspetto false perchè l'oggetto è già presente tra i prodotti
+        System.out.println(negozio.getMerce()); // controllo che non venga aggiunto l'item
+        System.out.println(negozio.addToItems(commessoSec, lavatrice)); //mi aspetto false perchè il commesso non è presente nel negozio
+        System.out.println(negozio.getMerce()); // controllo che non venga aggiunto l'item
+        System.out.println("FINE TEST \n");
+
+        negozio.addToItems(commesso, lavatrice); // popolo la lista anche con l'ultimo oggetto in vista del prossimo test
+        System.out.println("Test della funzione removeFromItems()");
+        System.out.println(negozio.getMerce());
+        System.out.println(negozio.removeFromItems(commesso, cellulare)); // mi aspetto true
+        System.out.println(negozio.getMerce()); // controllo che il cellulare sia stato rimosso dalla lista
+        System.out.println(negozio.removeFromItems(boss, matita)); // mi aspetto false
+        System.out.println(negozio.getMerce()); // controllo che la lista non sia cambiata dalla stampa precedente
+        System.out.println(negozio.removeFromItems(personaleAmministrativo, matita)); // mi aspetto false
+        System.out.println(negozio.getMerce()); // controllo che la lista non sia cambiata dalla stampa precedente
+        System.out.println(negozio.removeFromItems(commesso, cellulare)); // mi aspetto false perchè l'oggetto non è più presente tra i prodotti
+        System.out.println(negozio.getMerce()); // controllo che la lista non sia cambiata dalla stampa precedente
+        System.out.println(negozio.removeFromItems(commessoSec, lavatrice)); //mi aspetto false perchè il commesso non è presente nel negozio
+        System.out.println(negozio.getMerce()); // controllo che la lista non sia cambiata dalla stampa precedente
+        System.out.println("FINE TEST \n");
 
 
 

@@ -8,6 +8,10 @@ public class CentroCommerciale {
     private String indirizzoEsteso;
     private List<Negozio> negozi = new ArrayList<>();
 
+    public CentroCommerciale(){
+
+    }
+
     public CentroCommerciale(String ragioneSociale, String indirizzoEsteso){
         this.ragioneSociale = ragioneSociale;
         this.indirizzoEsteso = indirizzoEsteso;

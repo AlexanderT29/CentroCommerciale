@@ -13,6 +13,13 @@ public class Item {
         this.prezzo = prezzo;
     }
 
+    public Item(String codice, String descrizione, int prezzo, Negozio negozio){
+        this.codice = codice;
+        this.descrizione = descrizione;
+        this.prezzo = prezzo;
+        this.negozio = negozio;
+    }
+
     public String getCodice() {
         return codice;
     }

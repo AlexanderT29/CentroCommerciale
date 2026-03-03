@@ -11,6 +11,8 @@ public abstract class Lavoratore {
         this.cognome = cognome;
     }
 
+
+
     public String getNome() {
         return nome;
     }
