@@ -12,48 +12,91 @@ public class TestCentroCommerciale {
 
 
         // Inizio Test Alexander
+        System.out.println("**********************************************");
+        System.out.println("Test di Alexander (io)" );
+        System.out.println();
 
-        // Creazione del Centro Commerciale
+
         CentroCommerciale cc = new CentroCommerciale("RomaEst", "Via Collatina, Roma");
 
-        // Creazione del Negozio e associazione al Centro
+
         Negozio negozioElettronica = new Negozio("Tech Store Srl", "IT123456789", cc);
+        Negozio negozioTech = new Negozio("Tech Store", "IT11111", cc);
+        Negozio negozioAbbigliamento = new Negozio("Fashion Boutique", "IT22222", cc);
         cc.getNegozi().add(negozioElettronica);
+        cc.getNegozi().add(negozioTech);
+        cc.getNegozi().add(negozioAbbigliamento);
+
 
         // Creazione dei Lavoratori
         Boss boss = new Boss("Mario", "Rossi");
         PersonaleAmministrativo admin = new PersonaleAmministrativo("Luigi", "Verdi");
         Commesso commesso = new Commesso("Paolo", "Bianchi");
+        Boss bossTech = new Boss("Mario", "Rossi");
+        Commesso commessoTech = new Commesso("Luigi", "Verdi");
+        Commesso commessoFashion = new Commesso("Anna", "Bianchi");
 
         // Aggiungiamo i lavoratori alla lista del negozio per passare il controllo contains()
         negozioElettronica.getLavoratori().add(boss);
         negozioElettronica.getLavoratori().add(admin);
         negozioElettronica.getLavoratori().add(commesso);
 
+        negozioTech.getLavoratori().add(bossTech);
+        negozioTech.getLavoratori().add(commessoTech);
+        bossTech.setNegozio(negozioTech);
+        commessoTech.setNegozio(negozioTech);
+
+        negozioAbbigliamento.getLavoratori().add(commessoFashion);
+        commessoFashion.setNegozio(negozioAbbigliamento);
+
         // Impostiamo il negozio nel lavoratore per evitare il NullPointerException
         boss.setNegozio(negozioElettronica);
         admin.setNegozio(negozioElettronica);
         commesso.setNegozio(negozioElettronica);
 
+
+
         //  Creazione della Merce
         Item smartphone = new Item("SM01", "Smartphone 5G", 699);
         Item cuffie = new Item("CU02", "Cuffie Bluetooth", 149);
         Item laptop = new Item("LP03", "Laptop Gaming", 1299);
+        Item pc = new Item("PC01", "Computer Portatile", 1000);
+        Item mouse = new Item("MS01", "Mouse Wireless", 30);
+        Item mouse2 = new Item("MS02", "Mouse Wireless", 35);
+        Item maglietta = new Item("MG01", "T-Shirt Cotone", 20);
 
         System.out.println("TEST: Aggiunta degli Item: ");
         System.out.println("--- TEST AGGIUNTA MERCE ---");
 
         // Il Boss non può aggiungere merce (restituisce false)
         boolean esitoBoss = negozioElettronica.addToItems(boss, smartphone);
-        System.out.println("Boss aggiunge smartphone: " + (esitoBoss ? "Successo" : "Fallito"));
+        System.out.println("Boss aggiunge smartphone: Atteso: false, \nRisultato: " + esitoBoss);
 
         // L'Amministrativo può aggiungere merce
         boolean esitoAdmin = negozioElettronica.addToItems(admin, cuffie);
-        System.out.println("Admin aggiunge cuffie: " + (esitoAdmin ? "Successo" : "Fallito"));
+        System.out.println("Admin aggiunge cuffie: Atteso: true, \nRisultato: " + esitoAdmin);
 
         // Il Commesso può aggiungere merce
         boolean esitoCommesso = negozioElettronica.addToItems(commesso, laptop);
-        System.out.println("Commesso aggiunge laptop: " + (esitoCommesso ? "Successo" : "Fallito"));
+        System.out.println("Commesso aggiunge laptop: Atteso: true, \nRisultato: " + esitoCommesso);
+
+        // Il Boss non può aggiungere merce
+        boolean testBossAdd = negozioTech.addToItems(bossTech, pc);
+        System.out.println("Boss prova ad aggiungere PC: Atteso: false, \nRisultato: " + testBossAdd);
+
+        // Il commesso può aggiungere merce
+        boolean testCommessoAdd = negozioTech.addToItems(commessoTech, pc);
+        System.out.println("Commesso Tech aggiunge PC: Atteso: true, \nRisultato: " + testCommessoAdd);
+
+        // Il commesso aggiunge il mouse per la prima volta
+        negozioTech.addToItems(commessoTech, mouse);
+        System.out.println("Quantità merce dopo 1° inserimento Mouse: " + negozioTech.getMerce().size());
+
+        // Il commesso aggiunge LO STESSO IDENTICO mouse una seconda volta
+        negozioTech.addToItems(commessoTech, mouse);
+        System.out.println("Quantità merce dopo 2° inserimento dello STESSO Mouse: " + negozioTech.getMerce().size());
+
+
 
         System.out.println("Merce attualmente in negozio: " + negozioElettronica.getMerce().size() + " articoli.");
 
@@ -62,19 +105,27 @@ public class TestCentroCommerciale {
 
         // Il Boss non può rimuovere merce
         boolean rimozioneBoss = negozioElettronica.removeFromItems(boss, cuffie);
-        System.out.println("Boss rimuove cuffie: " + (rimozioneBoss ? "Successo" : "Fallito"));
+        System.out.println("Boss rimuove cuffie: Atteso: false, \nRisultato: " + rimozioneBoss );
 
         // L'Amministrativo non può rimuovere merce
         boolean rimozioneAdmin = negozioElettronica.removeFromItems(admin, cuffie);
-        System.out.println("Admin rimuove cuffie: " + (rimozioneAdmin ? "Successo" : "Fallito"));
+        System.out.println("Admin rimuove cuffie: Atteso: false, \nRisultato: " + rimozioneAdmin );
 
         // Il Commesso può rimuovere merce
         boolean rimozioneCommesso = negozioElettronica.removeFromItems(commesso, cuffie);
-        System.out.println("Commesso rimuove cuffie: " + (rimozioneCommesso ? "Successo" : "Fallito"));
+        System.out.println("Commesso rimuove cuffie: Atteso: true, \nRisultato: " + rimozioneCommesso);
+
+        // Il commesso cerca di rimuovere un mouse che non è mai stato aggiunto
+        boolean testRimozioneFantasma = negozioTech.removeFromItems(commessoTech, mouse2);
+        System.out.println("Commesso Tech prova a rimuovere Mouse non presente: Atteso: false, \nRisultato: " + testRimozioneFantasma);
 
         System.out.println("Merce attualmente in negozio: " + negozioElettronica.getMerce().size() + " articoli.");
 
         // Fine Test Alexander
+        System.out.println();
+        System.out.println("**********************************************");
+        System.out.println("Test di Pietro");
+        System.out.println();
 
         // Inizio Test Pietro
 

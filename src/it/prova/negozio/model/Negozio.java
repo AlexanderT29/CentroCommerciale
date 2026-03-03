@@ -63,7 +63,7 @@ public class Negozio {
     }
 
     public boolean addToItems(Lavoratore lavoratore, Item item){
-        if(!this.getLavoratori().contains(lavoratore)){
+        if(!this.getLavoratori().contains(lavoratore) || this.getMerce().contains(item)){
             return false;
         }
         return lavoratore.handleItemAdd(item);
