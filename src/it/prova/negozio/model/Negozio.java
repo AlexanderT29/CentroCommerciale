@@ -17,6 +17,11 @@ public class Negozio {
         this.partitaIva = partitaIva;
     }
 
+    public Negozio(String ragioneSociale, String partitaIva){
+        this.ragioneSociale = ragioneSociale;
+        this.partitaIva = partitaIva;
+    }
+
     public String getRagioneSociale() {
         return ragioneSociale;
     }
